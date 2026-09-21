@@ -38,18 +38,18 @@ sources:
           #   what we do below for all 12 months of 2025.
           external_location: >
             read_parquet([
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-01.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-02.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-03.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-04.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-05.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-06.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-07.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-08.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-09.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-10.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-11.parquet',
-              'https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-12.parquet'
+              '../../01_data/yellow_tripdata_2025-01.parquet',
+              '../../01_data/yellow_tripdata_2025-02.parquet',
+              '../../01_data/yellow_tripdata_2025-03.parquet',
+              '../../01_data/yellow_tripdata_2025-04.parquet',
+              '../../01_data/yellow_tripdata_2025-05.parquet',
+              '../../01_data/yellow_tripdata_2025-06.parquet',
+              '../../01_data/yellow_tripdata_2025-07.parquet',
+              '../../01_data/yellow_tripdata_2025-08.parquet',
+              '../../01_data/yellow_tripdata_2025-09.parquet',
+              '../../01_data/yellow_tripdata_2025-10.parquet',
+              '../../01_data/yellow_tripdata_2025-11.parquet',
+              '../../01_data/yellow_tripdata_2025-12.parquet'
             ])
 
 
@@ -60,4 +60,4 @@ sources:
           how they get human-readable names. 264 and 265 are "Unknown" and
           "Outside of NYC", not real places.
         meta:
-          external_location: "read_csv('https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv', header = true)"
+          external_location: "read_csv('../../01_data/taxi_zone_lookup.csv', header = true)"

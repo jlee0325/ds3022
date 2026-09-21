@@ -47,13 +47,11 @@ models:
         tests:
           - not_null
           - accepted_values:
-              arguments:
-                values: ['pickup', 'dropoff']
+              values: ['pickup', 'dropoff']
       - name: rank_group
         tests:
           - accepted_values:
-              arguments:
-                values: ['top', 'bottom']
+              values: ['top', 'bottom']
       - name: location_id
         tests:
           - not_null
