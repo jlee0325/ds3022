@@ -240,3 +240,6 @@ customers-2M.parquet
 
 # Downloaded parquet files from 03_transform/dbt/load.py
 03_transform/dbt/data/
+
+# Raw API responses landed by 04_ingest/07_pipeline.py
+04_ingest/data/
