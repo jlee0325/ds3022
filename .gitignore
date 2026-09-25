@@ -243,3 +243,7 @@ customers-2M.parquet
 
 # Raw API responses landed by 04_ingest/07_pipeline.py
 04_ingest/data/
+
+# Downloaded source data (re-downloadable from the NYC TLC cloudfront URLs)
+01_data/*.parquet
+01_data/*.csv
