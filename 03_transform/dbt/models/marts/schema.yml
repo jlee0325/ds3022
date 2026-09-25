@@ -112,8 +112,7 @@ models:
           - unique
           - not_null
           - accepted_values:
-              arguments:
-                values: [0, 1, 2, 3, 4, 5, 6]
+              values: [0, 1, 2, 3, 4, 5, 6]
       - name: trip_count
         tests:
           - not_null
@@ -122,15 +121,13 @@ models:
       - name: day_count
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 52
-                max_value: 53
+              min_value: 52
+              max_value: 53
       - name: pct_late_night_trips
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
-                max_value: 100
+              min_value: 0
+              max_value: 100
 
   - name: mart_trip_distance_distribution
     description: >
@@ -142,19 +139,16 @@ models:
           - unique
           - not_null
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
+              min_value: 0
       - name: trip_count
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 1
+              min_value: 1
       - name: cumulative_pct
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
-                max_value: 100
+              min_value: 0
+              max_value: 100
 
   - name: mart_tips_by_payment_type
     description: >
@@ -166,22 +160,19 @@ models:
           - unique
           - not_null
           - accepted_values:
-              arguments:
-                values: [0, 1, 2, 3, 4, 5, 6]
+              values: [0, 1, 2, 3, 4, 5, 6]
       - name: payment_type_name
         tests:
           - not_null
       - name: avg_tip_amount
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
+              min_value: 0
       - name: pct_trips_with_tip
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
-                max_value: 100
+              min_value: 0
+              max_value: 100
 
   - name: mart_fare_efficiency
     description: >
@@ -196,16 +187,14 @@ models:
         tests:
           - not_null
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
-                inclusive: false
+              min_value: 0
+              inclusive: false
       - name: fleet_fare_per_minute
         tests:
           - not_null
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
-                inclusive: false
+              min_value: 0
+              inclusive: false
 
   - name: mart_top_corridors
     description: >
@@ -213,8 +202,7 @@ models:
       of all trips (excludes zones 264/265) — QUESTIONS.md #8.
     tests:
       - dbt_utils.unique_combination_of_columns:
-          arguments:
-            combination_of_columns: [pickup_location_id, dropoff_location_id]
+          combination_of_columns: [pickup_location_id, dropoff_location_id]
     columns:
       - name: corridor_rank
         tests:
@@ -224,15 +212,13 @@ models:
       - name: pickup_location_id
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 1
-                max_value: 263
+              min_value: 1
+              max_value: 263
       - name: dropoff_location_id
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 1
-                max_value: 263
+              min_value: 1
+              max_value: 263
       - name: pickup_zone
         tests:
           - not_null
@@ -251,9 +237,8 @@ models:
           - unique
           - not_null
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 1
-                max_value: 9
+              min_value: 1
+              max_value: 9
 
   - name: mart_vendor_comparison
     description: >
@@ -265,30 +250,26 @@ models:
           - unique
           - not_null
           - accepted_values:
-              arguments:
-                values: [1, 2, 6, 7]
+              values: [1, 2, 6, 7]
       - name: vendor_name
         tests:
           - not_null
       - name: avg_speed_mph
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
-                max_value: 60
-                inclusive: false
+              min_value: 0
+              max_value: 60
+              inclusive: false
       - name: pct_zero_tip
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
-                max_value: 100
+              min_value: 0
+              max_value: 100
       - name: pct_cash
         tests:
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
-                max_value: 100
+              min_value: 0
+              max_value: 100
 
   - name: mart_pickups_by_zone
     description: >
@@ -306,5 +287,4 @@ models:
         tests:
           - not_null
           - dbt_utils.accepted_range:
-              arguments:
-                min_value: 0
+              min_value: 0
