@@ -17,6 +17,7 @@ dbt-mysql = "==1.7.0"
 requests = "*"
 httpx = "*"
 asyncio = "*"
+psutil = "*"
 
 [dev-packages]
 
