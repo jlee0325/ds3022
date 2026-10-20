@@ -8,15 +8,21 @@ from prefect import flow, task
 URL = "https://data.gharchive.org/2025-01-01-{hour}.json.gz"
 
 
-@task(retries=3)
+@task(retries=3, retry_delay_seconds=10)
 def count_events_for_hour(hour):
     # stream one hourly file and return {event_type: count}
-    # use a Counter named "counts" and pull out the "type"
-    # for each line in the stream
-    with requests.get(URL.format(hour=hour), stream=True) as r:
-        # do things
-        print("nothing")
-    print(f"hour {hour}: {counts.total()} events")
+    counts = Counter()
+    bad_lines = 0
+    with requests.get(URL.format(hour=hour), stream=True, timeout=60) as r:
+        r.raise_for_status()  # HTTP errors propagate so Prefect retries the task
+        # decompress the gzip stream on the fly, one JSON event per line
+        with gzip.GzipFile(fileobj=r.raw) as gz:
+            for line in gz:
+                try:
+                    counts[json.loads(line)["type"]] += 1
+                except (json.JSONDecodeError, KeyError):
+                    bad_lines += 1  # skip bad records without failing the whole hour
+    print(f"hour {hour}: {counts.total()} events ({bad_lines} skipped)")
     return dict(counts)
 
 
