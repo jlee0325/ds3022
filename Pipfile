@@ -20,7 +20,14 @@ psutil = "*"
 sympy = "*"
 bs4 = "*"
 prefect = "==3.8.7"
+<<<<<<< HEAD
 httpx = "*"
+=======
+quixstreams = "*"
+httpx2 = "*"
+requests-sse = "*"
+tornado = "*"
+>>>>>>> upstream
 
 [dev-packages]
 
