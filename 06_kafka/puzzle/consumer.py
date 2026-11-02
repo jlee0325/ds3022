@@ -44,15 +44,17 @@ def consume_messages():
                 # each are part of the `msg`: msg.key, msg.timestamp(), msg.value()
 
                 # key / timestamp / value
-                key = msg.key().decode("utf8")
+                #key = msg.key().decode("utf8")
 
                 # Kafka timestamps are (type, epoch milliseconds)
-                ts = datetime.fromtimestamp(msg.timestamp()[1] / 1000, tz=timezone.utc).isoformat()
+                #ts = datetime.fromtimestamp(msg.timestamp()[1] / 1000, tz=timezone.utc).isoformat()
 
                 # value is the actual json payload of the message content
                 value = json.loads(msg.value())
 
-                print(f"key={key} timestamp={ts} value={json.dumps(value)}")
+                #print(f"key={key} timestamp={ts} value={json.dumps(value)}")
+                
+
     except Exception as e:
         print(f"Error consuming from Kafka: {e}")
 

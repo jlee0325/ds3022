@@ -22,11 +22,7 @@ bs4 = "*"
 prefect = "==3.8.7"
 quixstreams = "*"
 tornado = "*"
-<<<<<<< HEAD
-requests-sse = "*"
 pydeck = "*"
-=======
->>>>>>> upstream
 redis = "*"
 streamlit = "*"
 websockets = "<17,>=15"
