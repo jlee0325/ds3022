@@ -18,6 +18,7 @@ topic = app.topic(name=TOPIC, value_serializer="json")
 
 # Read messages from the WebSocket until the server closes it, producing each to Kafka
 def produce_messages():
+<<<<<<< HEAD
     count = 0
     try:
         with connect(WS_URL) as ws, app.get_producer() as producer:
@@ -31,6 +32,18 @@ def produce_messages():
                 producer.produce(topic=topic.name, key=msg.key, value=msg.value)
                 count += 1
         print(f"Round complete; {count} messages produced to '{TOPIC}'")
+=======
+    try:
+        with connect(WS_URL) as ws, app.get_producer() as producer:
+            # print(f"Connected to {WS_URL} (first message arrives after ~30s)")
+            # Each loop blocks until the next message arrives; ends when the server closes
+            for raw in ws:
+                value = json.loads(raw)
+                msg = topic.serialize(key=value["id"], value=value)
+                producer.produce(topic=topic.name, key=msg.key, value=msg.value)
+                print(value)
+        print(f"Round complete; messages produced to '{TOPIC}'")
+>>>>>>> upstream
     except Exception as e:
         print(f"Error: {e}")
 
