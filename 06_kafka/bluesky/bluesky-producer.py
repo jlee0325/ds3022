@@ -58,10 +58,23 @@ JETSTREAM_URL = "wss://jetstream2.us-west.bsky.network/subscribe?wantedCollectio
 CURSOR_REWIND_US = 2_000_000               # On reconnect, rewind 2s so no events are missed (may produce a few duplicates)
 MAX_BACKOFF = 60                           # Max seconds to wait between reconnect attempts
 TOPIC_RETENTION_MS = 3 * 60 * 60 * 1000    # 3 hours
+CURSOR_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bluesky-cursor.txt")  # Saved resume point
+CURSOR_SAVE_EVERY = 1000                   # Write the cursor to CURSOR_FILE every N events
 
 cursor = None                              # time_us of the most recent event seen; used to resume after a disconnect
 backoff = 1                                # Current reconnect delay in seconds
 stop = False                               # Set on Ctrl-C to break out of the reconnect loop
+msg_count = 0                              # Events received; drives the periodic cursor save
+
+# Resume from the last saved cursor if a cursor file exists (unreadable/corrupt file -> start live)
+try:
+    with open(CURSOR_FILE) as f:
+        cursor = int(f.read().strip())
+    print(f"Loaded cursor {cursor} from {CURSOR_FILE}")
+except FileNotFoundError:
+    pass
+except (OSError, ValueError) as e:
+    print(f"Ignoring cursor file ({type(e).__name__}: {e})")
 
 # KAFKA_BROKER = os.getenv("KAFKA_BROKER", "127.0.0.1:19092,127.0.0.1:29092,127.0.0.1:39092")
 #
@@ -96,12 +109,18 @@ def on_open(ws):
 
 def on_message(ws, message):
     """Handle each Jetstream event: track cursor, skip non-commit events, key by DID, (optionally) produce to Kafka."""
-    global cursor
+    global cursor, msg_count
     try:
         data = json.loads(message)
 
         # Every event (including identity/account) carries time_us; record it as the resume point
         cursor = data.get("time_us", cursor)
+
+        # Persist the cursor every CURSOR_SAVE_EVERY events so a restart resumes from here
+        msg_count += 1
+        if msg_count % CURSOR_SAVE_EVERY == 0 and cursor:
+            with open(CURSOR_FILE, "w") as f:
+                f.write(str(cursor))
 
         # Jetstream also sends 'identity' and 'account' events, which have no 'commit' field
         if data.get("kind") != "commit":
