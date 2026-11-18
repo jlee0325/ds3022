@@ -32,6 +32,7 @@ requests_sse = "*"
 orjson = "*"
 fastapi = {extras = ["standard"], version = "*"}
 pymongo = "*"
+pytest = "*"
 
 [dev-packages]
 
